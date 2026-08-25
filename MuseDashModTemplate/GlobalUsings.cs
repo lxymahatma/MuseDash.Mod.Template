@@ -12,9 +12,6 @@ global using MuseDashMirror.Extensions.UnityExtensions;
 global using Cysharp.Threading.Tasks;
 global using Cysharp.Threading.Tasks.Linq;
 #endif
-#if UseZString
-global using Cysharp.Text;
-#endif
 global using static MuseDashModTemplate.MelonBuildInfo;
 #if UseMuseDashMirror
 global using static MuseDashMirror.UIComponents.Colors;

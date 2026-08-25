@@ -6,14 +6,14 @@
             <WorkingDirectory>$(OutputPath)</WorkingDirectory>
         </PropertyGroup>
         <ItemGroup>
-            <InputAssemblies Include="$(OutputPath)\$(AssemblyName).dll"/>
+            <InputAssemblies Include="$(OutputPath)$(AssemblyName).dll"/>
             <IlRepackLibs Include="$(OutputPath)"/>
             <IlRepackLibs Include="$(MelonNET6)"/>
         </ItemGroup>
         <ILRepack
                 Internalize="true"
                 LibraryPath="@(IlRepackLibs)"
-                OutputFile="$(OutputPath)\$(AssemblyName).dll"
+                OutputFile="$(OutputPath)$(AssemblyName).dll"
                 InputAssemblies="@(InputAssemblies)"
                 TargetKind="Dll"
                 Parallel="true"/>

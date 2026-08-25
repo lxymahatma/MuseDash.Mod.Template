@@ -10,10 +10,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="Directory.Build.props"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <Reference Include="0Harmony">
             <HintPath>$(MelonNET6)\0Harmony.dll</HintPath>
         </Reference>
@@ -78,7 +74,7 @@
             <HintPath>$(MelonNET6)\MelonLoader.dll</HintPath>
         </Reference>
         <Reference Include="Tomlet">
-            <HintPath>$(MelonNet6)\Tomlet.dll</HintPath>
+            <HintPath>$(MelonNET6)\Tomlet.dll</HintPath>
         </Reference>
         <Reference Include="Unity.Addressables">
             <HintPath>$(MelonAssemblies)\Unity.Addressables.dll</HintPath>
@@ -115,18 +111,17 @@
         </Reference>
     </ItemGroup>
 
-    <!--#if (UseMuseDashMirror || UseILRepack || UseUniTask || UseZString) -->
+    <!--#if (UseMuseDashMirror || UseILRepack || UseUniTask) -->
     <ItemGroup>
-        <PackageReference Condition="'$(UseMuseDashMirror)' == 'true'" Include="MuseDashMirror" Version="3.2.0"/>
-        <PackageReference Condition="'$(UseILRepack)' == 'true'" Include="ILRepack.Lib.MSBuild.Task" Version="2.0.26"/>
-        <PackageReference Condition="'$(UseUniTask)' == 'true'" Include="UniTask" Version="2.5.3"/>
-        <PackageReference Condition="'$(UseZString)' == 'true'" Include="ZString" Version="2.5.1"/>
+        <PackageReference Condition="'$(UseMuseDashMirror)' == 'true'" Include="MuseDashMirror" Version="*"/>
+        <PackageReference Condition="'$(UseILRepack)' == 'true'" Include="ILRepack.Lib.MSBuild.Task" Version="*" PrivateAssets="all"/>
+        <PackageReference Condition="'$(UseUniTask)' == 'true'" Include="UniTask" Version="*"/>
     </ItemGroup>
     <!--#endif -->
 
     <Target Name="CopyToModsFolder" AfterTargets="Build">
-        <Copy SourceFiles="$(OutputPath)\$(AssemblyName).dll" DestinationFolder="$(GameFolder)\Mods"/>
-        <Message Text="Copied DLL -&gt; $(GameFolder)\Mods\$(ProjectName).dll" Importance="High"/>
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(GameFolder)\Mods"/>
+        <Message Text="Copied DLL -&gt; $(GameFolder)\Mods\$(AssemblyName).dll" Importance="High"/>
     </Target>
 
 </Project>

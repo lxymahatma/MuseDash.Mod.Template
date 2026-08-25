@@ -21,12 +21,11 @@
         <LangVersion>latest</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <RootNamespace>templatepack</RootNamespace>
-        <OutputPath>$(SolutionDir)\bin</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="README.md" Pack="true" PackagePath="\"/>
-        <Content Include="MuseDashModTemplate\**\*" Exclude="MuseDashModTemplate\**\bin\**;MuseDashModTemplate\**\obj\**;MuseDashModTemplate\**\.idea\**"/>
+        <None Update="README.md" Pack="true" PackagePath="\"/>
+        <Content Include="MuseDashModTemplate\**\*" Exclude="MuseDashModTemplate\**\artifacts\**;MuseDashModTemplate\**\bin\**;MuseDashModTemplate\**\obj\**;MuseDashModTemplate\**\.idea\**"/>
         <Compile Remove="**\*"/>
     </ItemGroup>
 
