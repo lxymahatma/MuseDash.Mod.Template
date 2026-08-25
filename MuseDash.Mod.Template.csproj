@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageType>Template</PackageType>
-        <PackageVersion>1.0.4</PackageVersion>
+        <Version Condition="'$(Version)' == ''">1.0.4</Version>
         <PackageId>MuseDash.Mod.Template</PackageId>
         <Title>MuseDash Mod Template</Title>
         <Authors>lxy</Authors>

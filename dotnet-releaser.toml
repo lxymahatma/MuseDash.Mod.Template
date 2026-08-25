@@ -1,0 +1,16 @@
+profile = "custom"
+artifacts_folder = "artifacts/dotnet-releaser"
+
+[msbuild]
+project = "MuseDash.Mod.Template.csproj"
+configuration = "Release"
+
+[nuget]
+publish = true
+source = "https://api.nuget.org/v3/index.json"
+
+[github]
+user = "lxymahatma"
+repo = "MuseDash.Mod.Template"
+branches = ["main"]
+version_prefix = ""
