@@ -8,7 +8,7 @@ A `dotnet new` template for Muse Dash mods.
 
 - [Muse Dash](https://store.steampowered.com/app/774171/Muse_Dash/)
 - [MelonLoader](https://github.com/LavaGang/MelonLoader)
-- [.NET SDK 8 or later](https://dotnet.microsoft.com/download), capable of targeting `net6.0`
+- [.NET 10 SDK](https://dotnet.microsoft.com/download), capable of targeting `net6.0`
 - A C# IDE such as Visual Studio or Rider
 
 ## Configure the game directory

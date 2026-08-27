@@ -14,7 +14,7 @@ global using Cysharp.Threading.Tasks.Linq;
 #endif
 global using static MuseDashModTemplate.MelonBuildInfo;
 #if UseMuseDashMirror
-global using static MuseDashMirror.UIComponents.Colors;
-global using static MuseDashMirror.UIComponents.Fonts;
+global using static MuseDashMirror.UI.Colors;
+global using static MuseDashMirror.UI.Fonts;
 global using static MuseDashMirror.Utils.GameObjectUtils;
 #endif
