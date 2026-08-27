@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageType>Template</PackageType>
-        <Version>1.1.0</Version>
+        <MinVerDefaultPreReleaseIdentifiers>alpha</MinVerDefaultPreReleaseIdentifiers>
         <PackageId>MuseDash.Mod.Template</PackageId>
         <Title>MuseDash Mod Template</Title>
         <Authors>lxy</Authors>
@@ -22,6 +22,10 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <RootNamespace>templatepack</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MinVer" Version="7.0.0" PrivateAssets="all"/>
+    </ItemGroup>
 
     <ItemGroup>
         <None Update="README.md" Pack="true" PackagePath="\"/>
