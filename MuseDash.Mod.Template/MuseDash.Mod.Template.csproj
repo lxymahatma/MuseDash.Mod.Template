@@ -2,7 +2,6 @@
 
     <PropertyGroup>
         <PackageType>Template</PackageType>
-        <MinVerDefaultPreReleaseIdentifiers>alpha</MinVerDefaultPreReleaseIdentifiers>
         <PackageId>MuseDash.Mod.Template</PackageId>
         <Title>MuseDash Mod Template</Title>
         <Authors>lxy</Authors>
@@ -24,13 +23,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MinVer" Version="7.0.0" PrivateAssets="all"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <None Include="..\README.md" Pack="true" PackagePath="\"/>
-        <Content Include="MuseDashModTemplate\**\*" Exclude="MuseDashModTemplate\**\artifacts\**;MuseDashModTemplate\**\bin\**;MuseDashModTemplate\**\obj\**;MuseDashModTemplate\**\.idea\**"/>
+        <Content Include="MuseDashModTemplate\**\*" Exclude="MuseDashModTemplate\**\artifacts\**;MuseDashModTemplate\**\bin\**;MuseDashModTemplate\**\obj\**;MuseDashModTemplate\**\.idea\**;MuseDashModTemplate\MuseDashModTemplate.csproj"/>
         <Compile Remove="**\*"/>
     </ItemGroup>
+
+    <Target Name="AddTemplateProject" BeforeTargets="_GetPackageFiles" DependsOnTargets="MinVer">
+        <PropertyGroup>
+            <_TemplateProject>$(MSBuildThisFileDirectory)MuseDashModTemplate\MuseDashModTemplate.csproj</_TemplateProject>
+            <_PackedTemplateProject>$(IntermediateOutputPath)MuseDashModTemplate.csproj</_PackedTemplateProject>
+        </PropertyGroup>
+        <WriteLinesToFile File="$(_PackedTemplateProject)"
+                          Lines="$([MSBuild]::Escape($([System.IO.File]::ReadAllText('$(_TemplateProject)').Replace('MUSEDASH_MOD_SDK_VERSION', '$(PackageVersion)').TrimEnd())))"
+                          Overwrite="true"/>
+        <ItemGroup>
+            <None Include="$(_PackedTemplateProject)" Pack="true" PackagePath="content\MuseDashModTemplate\"/>
+        </ItemGroup>
+    </Target>
 
 </Project>

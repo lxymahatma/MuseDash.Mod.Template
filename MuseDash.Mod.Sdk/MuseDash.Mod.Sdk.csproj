@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageType>MSBuildSdk</PackageType>
+        <PackageId>MuseDash.Mod.Sdk</PackageId>
+        <Title>MuseDash Mod SDK</Title>
+        <Authors>lxy</Authors>
+        <Description>MSBuild SDK for Muse Dash mods. Locates the game, references MelonLoader and the game's assemblies, generates MelonInfo and deploys the mod on build.</Description>
+        <PackageTags>MuseDash;MelonLoader;msbuild-sdk</PackageTags>
+        <RepositoryUrl>https://github.com/lxymahatma/MuseDash.Mod.Template</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        <EnableDefaultItems>false</EnableDefaultItems>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <NoWarn>$(NoWarn);NU5128</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="Sdk\*.props;Sdk\*.targets" Pack="true" PackagePath="Sdk\"/>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+
+</Project>

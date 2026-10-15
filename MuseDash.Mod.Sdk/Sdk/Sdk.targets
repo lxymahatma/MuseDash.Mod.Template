@@ -1,0 +1,76 @@
+<Project>
+    <PropertyGroup>
+        <_ModAuthors>$(Authors)</_ModAuthors>
+        <_ModDescription>$(Description)</_ModDescription>
+    </PropertyGroup>
+
+    <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk"/>
+
+    <PropertyGroup Condition="'$(GameFolder)' == '' and Exists('$(MD_DIRECTORY)')">
+        <GameFolder>$(MD_DIRECTORY)</GameFolder>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(GameFolder)' == '' and '$(OS)' == 'Windows_NT'">
+        <_SteamPath>$([MSBuild]::GetRegistryValueFromView('HKEY_CURRENT_USER\Software\Valve\Steam', 'SteamPath', null, RegistryView.Default))</_SteamPath>
+        <_SteamLibrary Condition="Exists('$(_SteamPath)\steamapps\libraryfolders.vdf')">$([System.Text.RegularExpressions.Regex]::Match($([System.IO.File]::ReadAllText('$(_SteamPath)\steamapps\libraryfolders.vdf')), '"path"\s+"([^"]*)"(?:(?!"path").)*?[\r\n]\s*"774171"', RegexOptions.Singleline).Groups[1].Value)</_SteamLibrary>
+        <GameFolder Condition="'$(_SteamLibrary)' != ''">$([System.IO.Path]::GetFullPath('$(_SteamLibrary)\steamapps\common\Muse Dash'))</GameFolder>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <MelonNET6>$(GameFolder)\MelonLoader\net6\</MelonNET6>
+        <MelonAssemblies>$(GameFolder)\MelonLoader\Il2CppAssemblies\</MelonAssemblies>
+        <ModsFolder Condition="'$(ModsFolder)' == ''">$(GameFolder)\Mods\</ModsFolder>
+        <ModName Condition="'$(ModName)' == ''">$(AssemblyName)</ModName>
+        <MelonModType Condition="'$(MelonModType)' == ''">$(RootNamespace).Main</MelonModType>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(GameFolder)' != ''">
+        <Reference Include="$(MelonNET6)MelonLoader.dll" Private="false"/>
+        <Reference Include="$(MelonNET6)0Harmony.dll" Private="false"/>
+        <Reference Include="$(MelonNET6)Il2CppInterop.Common.dll" Private="false"/>
+        <Reference Include="$(MelonNET6)Il2CppInterop.Runtime.dll" Private="false"/>
+        <Reference Include="$(MelonNET6)Tomlet.dll" Private="false"/>
+        <Reference Include="$(MelonAssemblies)*.dll" Private="false"/>
+    </ItemGroup>
+
+    <Target Name="ValidateGame" BeforeTargets="ResolveAssemblyReferences" Condition="'$(DesignTimeBuild)' != 'true'">
+        <Error Condition="'$(GameFolder)' == ''" Text="Muse Dash was not found in any Steam library. Set the MD_DIRECTORY environment variable, or GameFolder in $(MSBuildProjectFile).user, to the game's folder."/>
+        <Error Condition="!Exists('$(GameFolder)\MuseDash.exe')" Text="$(GameFolder) is not a Muse Dash installation: MuseDash.exe was not found."/>
+        <Error Condition="!Exists('$(MelonNET6)MelonLoader.dll')" Text="MelonLoader is not installed in $(GameFolder)."/>
+        <Error Condition="!Exists('$(MelonAssemblies)Assembly-CSharp.dll')" Text="MelonLoader has not generated the game's assemblies yet. Start the game once with MelonLoader installed."/>
+    </Target>
+
+    <Target Name="GenerateMelonInfo" BeforeTargets="CoreCompile" DependsOnTargets="PrepareForBuild" Condition="'$(GenerateMelonInfo)' != 'false'">
+        <PropertyGroup>
+            <_MelonInfoFile>$(IntermediateOutputPath)$(MSBuildProjectName).MelonInfo.g.cs</_MelonInfoFile>
+            <_MelonInfoName>$(ModName.Replace('"', '""'))</_MelonInfoName>
+            <_MelonInfoVersion>$(Version.Replace('"', '""'))</_MelonInfoVersion>
+            <_MelonInfoAuthor>$(_ModAuthors.Replace('"', '""'))</_MelonInfoAuthor>
+            <_MelonInfoSource>// &lt;auto-generated/&gt;
+
+[assembly: global::MelonLoader.MelonInfo(typeof(global::$(MelonModType)), @"$(_MelonInfoName)", @"$(_MelonInfoVersion)", @"$(_MelonInfoAuthor)")]
+[assembly: global::MelonLoader.MelonGame("PeroPeroGames", "MuseDash")]
+
+namespace $(RootNamespace)
+{
+    internal static class MelonBuildInfo
+    {
+        internal const string Name = @"$(_MelonInfoName)";
+        internal const string Description = @"$(_ModDescription.Replace('"', '""'))";
+        internal const string Author = @"$(_MelonInfoAuthor)";
+        internal const string ModVersion = @"$(_MelonInfoVersion)";
+    }
+}</_MelonInfoSource>
+        </PropertyGroup>
+        <WriteLinesToFile File="$(_MelonInfoFile)" Lines="$([MSBuild]::Escape('$(_MelonInfoSource)'))" Overwrite="true" WriteOnlyWhenDifferent="true"/>
+        <ItemGroup>
+            <Compile Include="$(_MelonInfoFile)"/>
+            <FileWrites Include="$(_MelonInfoFile)"/>
+        </ItemGroup>
+    </Target>
+
+    <Target Name="DeployMod" AfterTargets="Build" Condition="'$(DeployMod)' != 'false' and '$(GameFolder)' != ''">
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsFolder)"/>
+        <Message Text="$(MSBuildProjectName) -> $(ModsFolder)$(TargetFileName)" Importance="high"/>
+    </Target>
+</Project>
