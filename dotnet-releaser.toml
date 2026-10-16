@@ -2,7 +2,7 @@ profile = "custom"
 artifacts_folder = "artifacts/dotnet-releaser"
 
 [msbuild]
-project = "MuseDash.Mod.Template.csproj"
+project = "MuseDash.Mod.Template/MuseDash.Mod.Template.csproj"
 configuration = "Release"
 
 [nuget]

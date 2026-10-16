@@ -28,7 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
         <Content Include="MuseDashModTemplate\**\*" Exclude="MuseDashModTemplate\**\artifacts\**;MuseDashModTemplate\**\bin\**;MuseDashModTemplate\**\obj\**;MuseDashModTemplate\**\.idea\**"/>
         <Compile Remove="**\*"/>
     </ItemGroup>
