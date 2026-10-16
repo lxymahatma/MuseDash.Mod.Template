@@ -9,9 +9,9 @@
 
     <!--#if (UseMuseDashMirror || UseILRepack || UseUniTask) -->
     <ItemGroup>
-        <PackageReference Condition="'$(UseMuseDashMirror)' == 'true'" Include="MuseDashMirror" Version="*"/>
-        <PackageReference Condition="'$(UseILRepack)' == 'true'" Include="ILRepack.Lib.MSBuild.Task" Version="*" PrivateAssets="all"/>
-        <PackageReference Condition="'$(UseUniTask)' == 'true'" Include="UniTask" Version="*"/>
+        <PackageReference Condition="'$(UseMuseDashMirror)' == 'true'" Include="MuseDashMirror" Version="3.4.2"/>
+        <PackageReference Condition="'$(UseILRepack)' == 'true'" Include="ILRepack.Lib.MSBuild.Task" Version="2.0.48" PrivateAssets="all"/>
+        <PackageReference Condition="'$(UseUniTask)' == 'true'" Include="UniTask" Version="2.5.11"/>
     </ItemGroup>
     <!--#endif -->
 

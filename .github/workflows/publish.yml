@@ -26,12 +26,12 @@ jobs:
         with:
           user: lxymahatma
 
-      - name: Install dotnet-releaser
-        run: dotnet tool install --global dotnet-releaser
+      - name: Restore tools
+        run: dotnet tool restore
 
       - name: Build and publish
         run: |
-          dotnet-releaser run \
+          dotnet dotnet-releaser run \
             --nuget-token "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" \
             --github-token "${{ secrets.GITHUB_TOKEN }}" \
             dotnet-releaser.toml

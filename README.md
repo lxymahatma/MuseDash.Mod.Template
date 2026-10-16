@@ -73,7 +73,7 @@ dotnet new musedashmod -n MyMod `
       `UserLibs` folder.
     - [`UniTask`](https://github.com/Cysharp/UniTask)
 
-Selected libraries use NuGet floating version `*`, so restore resolves the latest stable version. Prerelease versions are not selected.
+Selected libraries are pinned to versions that [Renovate](https://docs.renovatebot.com) keeps up to date.
 
 ## MuseDash.Mod.Sdk
 
