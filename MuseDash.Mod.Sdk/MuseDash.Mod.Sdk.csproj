@@ -20,8 +20,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="Sdk\*.props;Sdk\*.targets" Pack="true" PackagePath="Sdk\"/>
-        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+        <None Include="Sdk/*.props;Sdk/*.targets" Pack="true" PackagePath="Sdk/"/>
+        <None Include="../README.md" Pack="true" PackagePath="/"/>
     </ItemGroup>
 
 </Project>
